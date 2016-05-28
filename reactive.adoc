@@ -13,29 +13,48 @@ v3.11
   Uncomment following two lines if you want to highlight your code
   with `Pygments`.
 ///////////////////////
-:source-highlighter: highlight
-//:highlightjsdir: highlight
+// :source-highlighter: coderay
+:source-highlighter: pygments
+
+
+// :source-highlighter: highlight
+// :highlightjsdir: highlight
 //:highlightjs-theme: github
 //:pygments:
 //:pygments-style: manni
 // table or inline
 //:pygments-linenums-mode: inline
 //:src_numbered: numbered
-//:backend: revealjs
-//:revealjs_theme: night
+
+:backend: revealjs
+:revealjs_theme: night
 //:revealjs_theme: simple
 //:revealjs_center: false
-:backend: deckjs
-:deckjs_theme: neon
+
+// :backend: deckjs
+//:deckjs_theme: neon
 ///////////////////////
   Transitions that you can choose includes:
   fade, horizontal-slide, vertical-slide
 ///////////////////////
-:deckjs_transition: fade
-:navigation:
-:status:
+// :deckjs_transition: fade
+// :blank:
+// :goto:
+// :menu:
+// :navigation:
+// :status:
 //:toc:
 //:split:
+
+== Bugs
+
+Where do they come from
+
+[source,scala,numbered]
+----
+println(s"$name: hello world\n")
+println(s"$name: hello world\n")
+----
 
 == Slide One
 
@@ -44,11 +63,12 @@ v3.11
 * Bar
 * World
 
-[source,ruby,linenums]
-[%step]
+== Slide One
+
+[source,ruby,numbered]
 ----
 ORDERED_LIST_KEYWORDS = {
-  'loweralpha' => 'a',  # <1>
+  'loweralpha' => 'b',
   'lowerroman' => 'i',
   'upperalpha' => 'A',
   'upperroman' => 'I'
@@ -57,7 +77,6 @@ ORDERED_LIST_KEYWORDS = {
    #'decimal'    => '1'
 }
 ----
-<1> Callout description
 
 == Slide 1.1
 
@@ -87,14 +106,6 @@ How about a third slide
 * Bullets
 * In steps
 
-== Slide Five
-
-[source,perl,numbered]
-----
-print "$0: hello world\n"
-print "$0: hello world\n"
-print "$0: hello world\n"
-----
 
 ++++
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
