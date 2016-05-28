@@ -1,0 +1,101 @@
+= functional and reactive programming for scalable architectures
+Khaled Hafez & Mohamed Ragab
+v3.11
+:encoding: utf-8
+:lang: en
+///////////////////////
+  AsciiDoc use `source-highlight` as default highlighter.
+
+  Styles available for pygment highlighter:
+  monokai, manni, perldoc, borland, colorful, default, murphy, vs, trac,
+  tango, fruity, autumn, bw, emacs, vim, pastie, friendly, native,
+
+  Uncomment following two lines if you want to highlight your code
+  with `Pygments`.
+///////////////////////
+:source-highlighter: highlight
+//:highlightjsdir: highlight
+//:highlightjs-theme: github
+//:pygments:
+//:pygments-style: manni
+// table or inline
+//:pygments-linenums-mode: inline
+//:src_numbered: numbered
+//:backend: revealjs
+//:revealjs_theme: night
+//:revealjs_theme: simple
+//:revealjs_center: false
+:backend: deckjs
+:deckjs_theme: neon
+///////////////////////
+  Transitions that you can choose includes:
+  fade, horizontal-slide, vertical-slide
+///////////////////////
+:deckjs_transition: fade
+:navigation:
+:status:
+//:toc:
+//:split:
+
+== Slide One
+
+[%step]
+* Foo
+* Bar
+* World
+
+[source,ruby,linenums]
+[%step]
+----
+ORDERED_LIST_KEYWORDS = {
+  'loweralpha' => 'a',  # <1>
+  'lowerroman' => 'i',
+  'upperalpha' => 'A',
+  'upperroman' => 'I'
+   #'lowergreek' => 'a'
+   #'arabic'     => '1'
+   #'decimal'    => '1'
+}
+----
+<1> Callout description
+
+== Slide 1.1
+
+Does this work here?
+
+=== Slide 1.2
+
+Does this work here?
+
+=== Slide 1.3
+
+Does this work here?
+
+== Slide Two
+
+Hello World - Good Bye Cruel World
+
+A might not be that cruel world after all
+
+== Slide Three
+
+How about a third slide
+
+[%step]
+* With
+* A few
+* Bullets
+* In steps
+
+== Slide Five
+
+[source,perl,numbered]
+----
+print "$0: hello world\n"
+print "$0: hello world\n"
+print "$0: hello world\n"
+----
+
+++++
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+++++
