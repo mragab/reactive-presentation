@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.4" name="generator">
+<title>Asciidoctor Backends</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/web-2.0.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Asciidoctor Backends</h1>
+</section>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image"><a class="image" href="https://travis-ci.org/asciidoctor/asciidoctor-backends">
+<img alt="Build Status" src="https://travis-ci.org/asciidoctor/asciidoctor-backends.svg?branch=master">
+</a></span></p></div>
+<div class="paragraph"><p>This repository hosts an assortment of backends (i.e., templates) for <a href="https://github.com/asciidoctor/asciidoctor">Asciidoctor</a>, a pure Ruby port of the <a href="http://asciidoc.org">AsciiDoc</a> markup language.</p></div>
+<div class="paragraph"><p>In this repository, you&#8217;ll find replicas of both the html5 and docbook45 backends from AsciiDoc (and Asciidoctor) written in both <a href="http://haml.info">Haml</a> and <a href="http://slim-lang.com">Slim</a>, as well as backends for generating HTML5 presentations from AsciiDoc.</p></div>
+</div>
+</div>
+<section class="slide" id="_general_usage_instructions">
+<h2>General Usage Instructions</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure Asciidoctor, Slim, Haml and their dependencies are installed:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ gem install asciidoctor tilt haml thread_safe
+  gem install slim --version 2.1.0</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+The Slim-based templates are not yet compatible with Slim 3.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Clone <code>asciidoctor/asciidoctor-backends</code> to get templates for rendering presentation HTML:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone https://github.com/asciidoctor/asciidoctor-backends</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit <code>CONTENT_FILE</code> ( *.adoc or *.ad or &#8230;&#8203;):</p>
+<div class="ulist">
+<ul>
+<li>Slides &amp; content per slide</li>
+<li><p>
+[Optional] Set presentation "options" at top of <code>CONTENT_FILE</code>.  The options available &amp; their values will depend on presentation library (some examples below).<div class="literalblock">
+<div class="content">
+<pre>:${Attribute}: ${Value}</pre>
+</div>
+</div></p></li>
+</ul>
+</div>
+</li>
+<li>
+<p>Generate HTML from Asciidoctor templates:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command Line:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ asciidoctor -T TEMPLATE_DIRECTORY ${options} CONTENT_FILE</pre>
+</div>
+</div>
+</li>
+<li>
+Build Script: use Ruby, JavaScript, Gradle, or your favorite build tool/script with presentation options
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Copy or clone presentation library (to output destination/branch):</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone PRESENTATION_LIBRARY</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you are using <a href="https://pages.github.com/">GitHub Pages</a>, plan ahead by keeping your source files on <code>master</code> branch and all output files on the <code>gh-pages</code> branch.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<caption class="title">Table 1. Existing Backends Templates</caption>
+<colgroup>
+<col style="width:20%">
+<col style="width:40%">
+<col style="width:40%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Backend</th>
+<th class="tableblock halign-left valign-top"><code>PRESENTATION_LIBRARY</code></th>
+<th class="tableblock halign-left valign-top"><code>TEMPLATE_DIRECTORY</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><a href="http://imakewebthings.com/deck.js/">deck.js</a></p></div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a class="bare" href="https://github.com/imakewebthings/deck.js">https://github.com/imakewebthings/deck.js</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">replaced by:<br>
+<a href="https://github.com/asciidoctor/asciidoctor-deck.js">asciidoctor/asciidoctor-deck.js</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></p></div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a class="bare" href="https://github.com/hakimel/reveal.js">https://github.com/hakimel/reveal.js</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">replaced by:<br>
+<a href="https://github.com/asciidoctor/asciidoctor-reveal.js">asciidoctor/asciidoctor-reveal.js</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><a href="http://paulrouget.com/dzslides/">DZSlides</a></p></div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a class="bare" href="https://github.com/paulrouget/dzslides">https://github.com/paulrouget/dzslides</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>asciidoctor-backends/slim/dzslides</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><a href="http://markdalgleish.com/projects/bespoke.js/">Bespoke.js</a></p></div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a class="bare" href="https://github.com/markdalgleish/bespoke.js">https://github.com/markdalgleish/bespoke.js</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>asciidoctor-backends/slim/bespokejs</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Some backends may be broken out into new repositories in order to manage releases independently (and potentially publish separate gems).
+Aggregation of those releases back into this project may be delayed.
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="slide" id="_copyright_and_licensing">
+<h2>Copyright and Licensing</h2>
+<div class="paragraph"><p>Copyright &#169; 2012-2016 Dan Allen and the Asciidoctor Project.
+Free use of this software is granted under the terms of the MIT License.</p></div>
+<div class="paragraph"><p>See the <a href="LICENSE.html">LICENSE</a> file for details.</p></div>
+</section>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/scale/deck.scale.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

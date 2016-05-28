@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>deck.js Backend for Asciidoctor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_deck_js_backend_for_asciidoctor">deck.js Backend for Asciidoctor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="https://github.com/asciidoctor/asciidoctor-deck.js">deck.js backend</a> is a collection of Haml templates for <a href="https://github.com/asciidoctor/asciidoctor">Asciidoctor</a> that transform an AsciiDoc document into HTML5 slides animated by <a href="http://lab.hakim.se/deck.js/">deck.js</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage_instructions">Usage Instructions</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure Asciidoctor, Haml and all their dependencies are installed:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ gem install asciidoctor tilt thread_safe haml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Clone the asciidoctor-deck.js repository to get the templates necessary for converting AsciiDoc source to HTML slides:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone https://github.com/asciidoctor/asciidoctor-deck.js</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit <code>CONTENT_FILE</code> ( *.adoc or *.ad or &#8230;&#8203;):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Slides &amp; content per slide</p>
+</li>
+<li>
+<p>(Optional) Set presentation options at top of <code>CONTENT_FILE</code>.
+The options available &amp; their values will depend on presentation library (some examples below).</p>
+<div class="literalblock">
+<div class="content">
+<pre>:${Attribute}: ${Value}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Generate HTML from the Asciidoctor templates</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command Line:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ asciidoctor -T templates/haml CONTENT_FILE</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build Script: use Ruby, JavaScript, Gradle or your favorite build tool/script with presentation options</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Copy or clone presentation library (to output destination/branch)</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone https://github.com/imakewebthings/deck.js</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you are using <a href="https://pages.github.com/">GitHub Pages</a>, plan ahead by keeping your source files on <code>master</code> branch and all output files on the <code>gh-pages</code> branch.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_additional_notes">Additional Notes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>If you are planning to split your slides you also need to copy to <code>extensions</code> directory the <code>deck.split.js</code> file which can be downloaded from <a href="https://github.com/houqp/deck.split.js">GitHub</a></p>
+</li>
+<li>
+<p>If you want to use the fullscreen photo feature, you must create an <code>images</code> directory.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_source_examples">Source Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s see some examples of <code>deckjs</code> backend features:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>= Title Slide
+Presenter Name
+
+== Slide One
+
+Foo
+
+Bar
+
+World
+
+[canvas-image=./images/cosplay.jpg]
+== Slide Two
+
+[.canvas-caption, position=center-up]
+Hello World - Good Bye Cruel World</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the previous snippet, we are creating a slide titled “Slide One” with bullets and another one titled “Slide Two” with centered text (the default behavior of deck.js) with <a href="https://github.com/hakimel/deck.js#speaker-notes">speaker notes</a>.</p>
+</div>
+<div class="paragraph">
+<p>Some things to consider:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>canvas-image</code> attribute receives as a parameter the location of image we want to use and always must go before the section.</p>
+</li>
+<li>
+<p>If you are planning to add a message over the image, you can do it as usually, but probably won&#8217;t be read good, using       <code>position</code> attribute which positions text into the slide (bottom-left, top-left, bottom-right, top-right, center-up, center-down) and <code>canvas-caption</code> role will improve so much how text is rendered.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>== Another Slide
+
+[%step]
+That's all.
+
+[%step]
+My Folks</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In previous example we are creating one slide which instead of showing both paragraphs at the same time, will be presented each time you try to go to next slide.</p>
+</div>
+<div class="paragraph">
+<p>And the same can be applied to lists, images, quotes, code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>== Yet Another Slide
+
+[%step]
+* A
+* B
+* C</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, each bullet will appear to screen each time you try to go to next slide.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+The original deckjs backend for AsciiDoc used the option name <em>incremental</em> instead of <em>step</em>.
+We&#8217;ve changed it here to save you some typing :)
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deck_js_options">deck.js Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are some attributes that can be set at the top of the document which they are specific of <code>deckjs</code> backend.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Value(s)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:deckjs_theme:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>none</strong>, web-2.0, swiss, neon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">where you set the deck.js theme.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:deckjs_transition:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>none</strong>, horizontal-slide, vertical-slide, fade</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">where you set the kind of transition.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:customjs:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;javascript folder&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">where you set a custom javascript file. It can be used as a deck.js custom configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:customcss:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;css folder&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">where you set a custom css file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:navigation:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the presence of this attribute makes deck.js to render a back/next icons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:status:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the presence of this attribute makes deck.js to render current slide and total number of slides.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:split:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with this attribute we are registering the <code>deck.split.js</code> file.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You can also specify a custom stylesheet using the <code>stylesheet</code> attribute, which can be used to customize AsciiDoc elements like section, paragraph, images, etc&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stay_connected">Stay Connected</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you need any other feature supported by <code>deckjs</code> to be ported to this backend, any way to make it better or you find any bug, do not hesitate to open an issue.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-04-26 19:21:57 EET
+</div>
+</div>
+</body>
+</html>
