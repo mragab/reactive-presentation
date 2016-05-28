@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.4" name="generator">
+<title>reveal.js backend for Asciidoctor</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/toc/deck.toc.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/web-2.0.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>reveal.js backend for Asciidoctor</h1>
+</section>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>The <a href="https://github.com/asciidoctor/asciidoctor-reveal.js">reveal.js backend</a> is a collection of Slim templates for <a href="https://github.com/asciidoctor/asciidoctor">Asciidoctor</a> that transform an AsciiDoc document into HTML5 slides animated by <a href="http://lab.hakim.se/reveal-js/">reveal.js</a>.</p></div>
+</div>
+</div>
+<section class="slide" id="_prerequisites">
+<h2>Prerequisites</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure Asciidoctor, Slim and their dependencies are installed:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ gem install asciidoctor tilt thread_safe slim</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Clone <code>asciidoctor/asciidoctor-reveal.js</code> to get templates for rendering presentation HTML:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone git://github.com/asciidoctor/asciidoctor-reveal.js.git</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy or clone presentation library (to output destination/branch)</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</section>
+<section class="slide" id="_rendering_the_asciidoc_into_slides">
+<h2>Rendering the AsciiDoc into slides</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Create content in a file (*.adoc, *.ad, etc.).
+See examples in <a href="#_some_examples">Some Examples</a> section to get started or files in <code>test/</code>.
+</li>
+<li>
+<p>Generate HTML presentation from the Asciidoctor templates</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ asciidoctor -T templates/slim CONTENT_FILE</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you want to use reveal.js 2, please switch your asciidoctor-reveal.js repo to the reveal.js-2.x branch.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you are using <a href="https://pages.github.com/">GitHub Pages</a>, plan ahead by keeping your source files on <code>master</code> branch and all output files on the <code>gh-pages</code> branch.
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="slide" id="_some_examples">
+<h2>Some Examples</h2>
+<div class="paragraph"><p>Let&#8217;s see some examples of <code>revealjs</code> backend features.</p></div>
+<section class="slide" id="_basic_presentation_with_speaker_notes">
+<h2>Basic presentation with speaker notes</h2>
+<div class="listingblock">
+<div class="content">
+<pre><code>= Title Slide
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+== Slide Two
+
+Hello World - Good Bye Cruel World
+
+[NOTE.speaker]
+--
+Actually things aren't that bad
+--</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_background_colors">
+<h2>Background colors</h2>
+<div class="paragraph"><p>In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker notes</a>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[data-background="yellow"]
+== Slide Three
+
+Is very yellow</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Slide Three applies the attribute <a href="http://lab.hakim.se/reveal-js/#/14">data-background</a> to the <code>reveal.js</code> &lt;section&gt; tag.
+Anything accepted by CSS color formats works.
+Here is the <a href="https://github.com/hakimel/reveal.js#slide-backgrounds">upstream documentation</a>.</p></div>
+</section>
+<section class="slide" id="_fragments">
+<h2>Fragments</h2>
+<div class="listingblock">
+<div class="content">
+<pre><code>== Slide Four
+
+[%step]
+* this
+* is
+* revealed
+* gradually</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Slide Four has bullets that are revealed one after the other.
+This is what <code>reveal.js</code> calls <a href="http://lab.hakim.se/reveal-js/#/fragments">fragments</a>.
+Applying the step option or role on a list (<code>[%step]</code> or <code>[.step]</code>) will do the trick.
+Here is <a href="https://github.com/hakimel/reveal.js#fragments">upstream documentation</a> on the topic.
+Note that only <code>fade-in</code> is supported for lists at the moment.</p></div>
+</section>
+<section class="slide" id="_syntax_highlighting">
+<h2>Syntax highlighting</h2>
+<div class="listingblock">
+<div class="content">
+<pre><code>== Slide Five
+
+Uses highlighted code
+
+----
+print "Hello World"
+----</code></pre>
+</div>
+</div>
+<div class="paragraph"><p><code>revealjs</code> uses <a href="https://highlightjs.org/">highlight.js</a> to do its syntax highlighting by default.
+By default <code>[source]</code> blocks and blocks delimited by <code>----</code> will be highlighted.
+An explicit <code>[listing]</code> block will not be highlighted.
+<code>highlight.js</code> does language auto-detection but using the <code>language="&#8230;&#8203;"</code> attribute will hint the highlighter.
+For example this will highlight this source code as Perl:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>== Slide Five
+
+[source,perl]
+----
+print "$0: hello world\n"
+----</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Currently <code>revealjs</code> uses a rather old version of <a href="https://highlightjs.org/">highlight.js</a> that does not handle callouts correctly.
+To fix this download a current version of <a href="https://highlightjs.org/">highlight.js</a> and copy it to <code>reveal.js/plugin/highlight/highlight.js</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph"><p>Alternatively, you can use <a href="http://coderay.rubychan.de">Coderay</a> or <a href="http://pygments.org">Pygments</a> as the highlighter.
+These handle callouts correctly.</p></div>
+<div class="paragraph"><p>To use <a href="http://coderay.rubychan.de">Coderay</a>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>= Title slide
+:source-highlighter: coderay</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>To use <a href="http://pygments.org">Pygments</a>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>= Title slide
+:source-highlighter: pygments</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_vertical_slides">
+<h2>Vertical slides</h2>
+<div class="listingblock">
+<div class="content">
+<pre><code>== Slide Six
+
+Top slide
+
+=== Slide Six.One
+
+This is a vertical subslide</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Slide Six uses the vertical slide feature of <code>reveal.js</code>.
+Slide Six.One will be rendered vertically below Slide Six.
+Here is <a href="https://github.com/hakimel/reveal.js#markup">upstream documentation</a> on that topic.</p></div>
+</section>
+<section class="slide" id="_slides_without_titles">
+<h2>Slides without titles</h2>
+<div class="paragraph"><p>There are a few ways to have no titles on slides.</p></div>
+<div class="ulist">
+<ul>
+<li>Setting your title to <code>!</code></li>
+<li>Adding the <code>notitle</code> option to your slide</li>
+<li>Adding the <code>conceal</code> option to your slide</li>
+</ul>
+</div>
+<div class="paragraph"><p>Here is an example of the three techniques in action:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>link:test/concealed-slide-titles.adoc[]</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>conceal</code> and <code>notitle</code> have the advantage that the slide still has an id so it can be linked to.
+</td>
+</tr>
+</table>
+</div>
+</section>
+</section>
+<section class="slide" id="_about_jade_templates">
+<h2>About Jade Templates</h2>
+<div class="paragraph"><p><code>/templates/jade</code> directory contains jade template files they are ported from <code>/templates/slim</code> templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in <a href="https://github.com/asciidocfx/AsciidocFX">AsciidocFX</a> editor. You can look at the <a href="https://github.com/asciidocfx/asciidoctor.js-reveal-demo">demo</a>.</p></div>
+</section>
+<section class="slide" id="_reveal_js_options">
+<h2>reveal.js Options</h2>
+<div class="paragraph"><p>There are some attributes that can be set at the top of the document which they are specific of revealjs backend.</p></div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Default settings are based on <code>reveal.js</code> default settings.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:25%">
+<col style="width:25%">
+<col style="width:50%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Value(s)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_theme:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">beige, <strong>black</strong>, league, night, serif, simple, sky, solarized, white</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chooses one of reveal.js' <a href="https://github.com/hakimel/reveal.js#theming">built-in themes</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_customtheme:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;file|URL&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides CSS with given file or URL.
+Default is disabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:highlightjs-theme:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;file|URL&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides <a href="https://highlightjs.org">highlight.js</a> CSS style with given file or URL.
+Default is built-in <em class="path">lib/css/zenburn.css</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjsdir:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;file|URL&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides reveal.js directory.
+Example: ../reveal.js</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_controls:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display controls in the bottom right corner.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_progress:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display a presentation progress bar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_slideNumber:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display the page number of the current slide.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_history:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Push each slide change to the browser history.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_keyboard:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable keyboard shortcuts for navigation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_overview:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable the slide overview mode.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_touch:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables touch navigation on devices with touch input.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_center:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vertical centering of slides.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_loop:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Loop the presentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_rtl:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change the presentation direction to be RTL.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_fragments:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Turns fragments on and off globally.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_embedded:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flags if the presentation is running in an embedded mode (i.e., contained within a limited portion of the screen).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_autoSlide:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;integer&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delay in milliseconds between automatically proceeding to the next slide.
+Disabled when set to <strong>0</strong> (the default).
+This value can be overwritten by using a <code>data-autoslide</code> attribute on your slides.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_autoSlideStoppable:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stop auto-sliding after user input.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_mouseWheel:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable slide navigation via mouse wheel.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_hideAddressBar:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>true</strong>, false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hides the address bar on mobile devices.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_previewLinks:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true, <strong>false</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Opens links in an iframe preview overlay.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_transition:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none, fade, <strong>slide</strong>, convex, concave, zoom</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transition style.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_transitionSpeed:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>default</strong>, fast, slow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transition speed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_backgroundTransition:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none, <strong>fade</strong>, slide, convex, concave, zoom</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transition style for full page slide backgrounds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_viewDistance:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;integer&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of slides away from the current that are visible. Default: 3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_parallaxBackgroundImage:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;file|URL&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parallax background image.
+Defaults to none</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:revealjs_parallaxBackgroundSize:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;CSS size syntax&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parallax background size (accepts any CSS syntax).
+Defaults to none</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>If you want to build a custom theme or customize an existing one you should look at the <a href="https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md">reveal.js documentation</a> and use the <code>revealjs_customtheme</code> AsciiDoc attribute to activate it.</p></div>
+</section>
+<section class="slide" id="_minimum_requirements">
+<h2>Minimum Requirements</h2>
+<div class="ulist">
+<ul>
+<li>asciidoctor 1.5.0</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_copyright_and_licensing">
+<h2>Copyright and Licensing</h2>
+<div class="paragraph"><p>Copyright &#169; 2012-2016 Olivier Bilodeau, Charles Moulliard, Dan Allen and the Asciidoctor Project.
+Free use of this software is granted under the terms of the MIT License.</p></div>
+<div class="paragraph"><p>See the <a href="LICENSE.html">LICENSE</a> file for details.</p></div>
+</section>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/scale/deck.scale.js"></script>
+<script src="deck.js/extensions/toc/deck.toc.js"></script>
+<div class="deck-toc"></div>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>
