@@ -323,6 +323,34 @@ def sum(ints: List[Int]): Int = ints match {
 * `Cons` is short for __cons__truct and comes from Lisp
 * Scala has built in extractors for a number of types and you can write your own
 
+== example: Case classes
+
+[source,scala,numbered]
+----
+case class Dog(name:String)
+case class Cat(name:String, age:Int)
+val cats = Vector(Cat("Miffy", 3), Cat("Rags", 2))
+----
+
+* That is it, no boilerplate code
+
+== example: String Interpolation
+
+[source,scala,numbered]
+----
+  def formatResult(name: String, n: Int, f: Int => Int) = {
+    val msg = "The %s of %d is %d."
+    msg.format(name, n, f(n))
+  }
+----
+
+* can be written as
+
+[source,scala,numbered]
+----
+  def formatResult(name: String, n: Int, f: Int => Int) = s"The $name of $n is ${f(n)}."
+----
+
 
 == example: Option
 
@@ -342,6 +370,66 @@ def mean(xs: Seq[Double]): Option[Double] =
 
 * No `NullPointerException`
 
+== example: bulk operations
+
+[source,scala,numbered]
+----
+scala> List(1,2,3,4).map(_ + 10)
+List(11,12,13,14)
+
+scala> List(1,2,3,4).filter(_ % 2 == 0)
+List(2,4)
+
+scala> (1 to 100).reduce(_ + _)
+Int = 5050
+----
+
+[%step]
+* what is `scala>`
+* what is a mapping function
+* what is `\_`
+* what is `(1 to 100)` -- `Vector.range(1, 100)`
+* No iteration code
+
+== example: Strictness and laziness
+
+[source,scala,numbered]
+----
+scala> List(1,2,3,4).map(_ + 10).filter(_ % 2 == 0).map(_ * 3)
+List(36,42)
+----
+
+* How many `List`(s)?
+
+[source,scala,numbered]
+----
+scala> false && { println("!!"); true } // does not print anything
+res0: Boolean = false
+
+scala> true || { println("!!"); false } // doesn't print anything either
+res1: Boolean = true
+----
+
+* we can write non-strict functions by accepting some of our arguments unevaluated
+
+== Things we left out
+
+* Currying
+* Lifting
+* for comprehensions
+* pattern matching with case classes
+* Traits
+* Futures, Async, Await
+* ...
+
+_We barely scratched the surface_
+
+== Tips
+
+* Scala is a hybrid language, get in the functional mood
+* Scala is a scalable language, find your pace
+* Brevity improves readability .. sometimes, find your balance
+
 == Summary
 
 * First class and higher order functions
@@ -351,6 +439,9 @@ def mean(xs: Seq[Double]): Option[Double] =
 * Type systems - lambda calculus
 * Referential transparency
 * Functional programming in non-functional languages
+
+== Actor Model
+
 
 == Next (1)
 
