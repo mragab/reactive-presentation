@@ -1,13 +1,80 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Khaled Hafez &amp; Mohamed Ragab"><title>functional and reactive programming for scalable architectures</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h1>functional and reactive programming for scalable architectures</h1><p><small>Khaled Hafez &amp; Mohamed Ragab</small></p></section><section id="_today_s_plan"><h2>Today&#8217;s plan</h2><div class="olist arabic"><ol class="arabic"><li><p>Functional Programming</p></li><li><p>Reactive Programming</p></li><li><p>Actor Model</p></li><li><p>Messaging Patterns</p></li><li><p>Event Sourcing and CQRS</p></li><li><p>Domain Modeling</p></li><li><p>Microservices</p></li><li><p>DevOps and Continuous Delivery</p></li></ol></div></section>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Khaled Hafez &amp; Mohamed Ragab"><title>functional and reactive programming for scalable architectures</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/night.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h1>functional and reactive programming for scalable architectures</h1><p><small>Khaled Hafez &amp; Mohamed Ragab</small></p></section><section id="_today_s_plan"><h2>Today&#8217;s plan</h2><div class="olist arabic"><ol class="arabic"><li><p>Functional Programming</p></li><li><p>Reactive Programming</p></li><li><p>Actor Model</p></li><li><p>Messaging Patterns</p></li><li><p>Event Sourcing and CQRS</p></li><li><p>Domain Modeling</p></li><li><p>Microservices</p></li><li><p>DevOps and Continuous Delivery</p></li></ol></div></section>
 <section id="_show_of_hands"><h2>Show of hands</h2><div class="ulist"><div class="title">Who is familiar with</div><ul><li class="fragment"><p>Functional Programming</p></li><li class="fragment"><p>Reactive Programming</p></li><li class="fragment"><p>Actor Model</p></li><li class="fragment"><p>Event Sourcing</p></li><li class="fragment"><p>CQRS</p></li><li class="fragment"><p>Microservices</p></li><li class="fragment"><p>DevOps</p></li></ul></div></section>
-<section id="_show_of_hands_2"><h2>Show of hands</h2><div class="ulist"><div class="title">Who is doing</div><ul><li class="fragment"><p>Functional Programming</p></li><li class="fragment"><p>Scala &amp; Akka</p></li><li class="fragment"><p>Microservices</p></li><li class="fragment"><p>DevOps</p></li></ul></div></section>
+<section id="_show_of_hands_2"><h2>Show of hands</h2><div class="ulist"><ul><li class="fragment"><p>who writes software regardless of the job title</p></li><li class="fragment"><p>who designs but doesn&#8217;t write software</p></li></ul></div></section>
+<section id="_show_of_hands_3"><h2>Show of hands</h2><div class="ulist"><div class="title">who is doing</div><ul><li class="fragment"><p>Object Oriented Programming</p></li><li class="fragment"><p>Java</p></li><li class="fragment"><p>Functional Programming</p></li><li class="fragment"><p>Scala &amp; Akka</p></li><li class="fragment"><p>Microservices</p></li><li class="fragment"><p>DevOps</p></li></ul></div></section>
 <section id="_what_is_functional_programming"><h2>What is Functional Programming</h2><div class="ulist"><ul><li class="fragment"><p>Programming with functions</p></li><li class="fragment"><p>Functions as the primary unit of abstraction</p></li><li class="fragment"><p>Kingdom of verbs as opposed to kingdom of nouns</p></li></ul></div></section>
 <section id="_what_is_it_not"><h2>What is it not</h2><div class="quoteblock"><blockquote><div class="paragraph"><p><strong>It is not a new programming language syntax</strong></p></div></blockquote><div class="attribution">&#8212; You only feel this for real as you learn it</div></div></section>
-<section id="_what_is_a_pure_function"><h2>What is a pure function</h2><div class="ulist"><ul><li class="fragment"><p>Input</p></li><li class="fragment"><p>Processing</p></li><li class="fragment"><p>Output</p></li><li class="fragment"><p>No dependence on global state</p></li><li class="fragment"><p>No side effects</p></li></ul></div></section>
+<section id="_what_is_a_pure_function"><h2>What is a pure function</h2><div class="ulist"><ul><li class="fragment"><p>Input</p></li><li class="fragment"><p>Processing</p></li><li class="fragment"><p>Output</p></li><li class="fragment"><p>No dependence on global state or external resources</p></li><li class="fragment"><p>No side effects</p></li></ul></div></section>
 <section id="_what_is_a_side_effect"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A function has a side effect if it does something other than simply return a result</p></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
 <section id="_what_is_a_side_effect_2"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="ulist"><div class="title">for example:</div><ul><li><p>Modifying a variable</p></li><li><p>Modifying a data structure in place</p></li><li><p>Setting a field on an object</p></li><li><p>Throwing an exception</p></li><li><p>Halting with an error</p></li></ul></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
 <section id="_what_is_a_side_effect_3"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="ulist"><div class="title">for example:</div><ul><li><p>Printing to the console</p></li><li><p>Reading user input</p></li><li><p>Reading from or writing to a file</p></li><li><p>Drawing on the screen</p></li></ul></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
-<section id="_where_to_go_from_here"><h2>Where to go from here</h2><div class="ulist"><ul><li><p>Coursera: Functional Programming in Scala Specialization</p></li><li><p>Book: Bruce Eckel. “Atomic Scala 2nd Edition.”</p></li><li><p>Book: Paul Chiusano Rúnar Bjarnason. “Functional Programming in Scala.”</p></li><li><p>Book: Martin Odersky. “Programming in Scala, Third Edition”</p></li><li><p>Book: Vaughn Vernon. “Reactive Messaging Patterns with the Actor Model: Applications and Integration in Scala and Akka”</p></li></ul></div></section>
+<section id="_scala_jump_start"><h2>Scala jump start</h2></section>
+<section id="_setup"><h2>Setup</h2><div class="ulist"><ul><li><p>Decent machine</p></li><li><p>Internet connection</p></li><li><p>IDE</p><div class="ulist"><ul><li><p>Intellij IDEA + Scala Plugin which includes support for Sbt</p></li></ul></div></li><li><p>Build</p><div class="ulist"><ul><li><p>Sbt: Scala Build Tool, just download the latest version of sbt launcher</p></li></ul></div></li></ul></div></section>
+<section id="_example_abs"><h2>example: abs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">def abs(n: Int): Int =
+  if (n &lt; 0) -n
+  else n</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>is this a pure function?</p></li><li class="fragment"><p>there is no <code>return</code> statement</p></li><li class="fragment"><p>there are no statements</p></li><li class="fragment"><p>everything is an expressions</p></li><li class="fragment"><p><code>abs</code> function is a single expression, thus no need for <code>{ &#8230;&#8203; }</code></p></li><li class="fragment"><p>and there are no <code>;</code>(s)</p></li></ul></div></section>
+<section id="_example_factorial"><h2>example: factorial</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def factorial(n: Int): Int = {
+    @annotation.tailrec
+    def go(n: Int, acc: Int): Int =
+      if (n &lt;= 0) acc
+      else go(n-1, n*acc)
+
+    go(n, 1)
+  }</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>a function inside a function</p></li><li class="fragment"><p>recursion</p></li><li class="fragment"><p>eliminating mutation not abstracting it</p></li><li class="fragment"><p>worried about stack, tail recursion</p></li><li class="fragment"><p>why <code>@annotation.tailrec</code></p></li></ul></div></section>
+<section id="_example_result_formatter"><h2>example: result formatter</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
+  }</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>what is <code>val</code>? - val vs var</p></li><li class="fragment"><p>what is the type of <code>msg</code></p></li><li class="fragment"><p>what is the type of the return value of the function</p></li><li class="fragment"><p>type inference, everywhere except function parameters</p></li></ul></div></section>
+<section id="_example_object"><h2>example: object</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">object MyModule {
+  def abs(n: Int): Int =
+    if (n &lt; 0) -n
+    else n
+
+  private def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
+  }
+
+  def main(args: Array[String]): Unit =
+    println(formatAbs(-42))
+}</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>what is <code>object</code></p></li><li class="fragment"><p>what is <code>private</code></p></li><li class="fragment"><p>what is <code>main</code></p></li><li class="fragment"><p>there is no <code>static</code></p></li></ul></div></section>
+<section id="_example_composable_result_formatter"><h2>example: composable result formatter</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def formatResult(name: String, n: Int, f: Int =&gt; Int) = {
+    val msg = "The %s of %d is %d."
+    msg.format(name, n, f(n))
+  }</code></pre></div></div>
+<div class="ulist"><ul><li><p>a function that takes a function as a parameter</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def main(args: Array[String]): Unit = {
+    println(formatResult("absolute value", -42, abs))
+    println(formatResult("factorial", 7, factorial))
+  }</code></pre></div></div></section>
+<section id="_example_polymorphic_function"><h2>example: polymorphic function</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def findFirst(strArr: Array[String], key: String): Int = {
+    @annotation.tailrec
+    def findFrom(n: Int): Int =
+      if (n &gt;= strArr.length) -1
+      else if (strArr(n) == key) n
+      else findFrom(n + 1)
+    findFrom(0)
+  }</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>takes an <code>Array</code> of <code>String</code>(s) and a <code>String</code></p></li><li class="fragment"><p>what about finding other types in arrays</p></li></ul></div></section>
+<section id="_example_polymorphic_function_2"><h2>example: polymorphic function (2)</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">  def findFirst[A](as: Array[A], p: A =&gt; Boolean): Int = {
+    @annotation.tailrec
+    def findFrom(n: Int): Int =
+      if (n &gt;= as.length) -1
+      else if (p(as(n))) n
+      else findFrom(n + 1)
+    findFrom(0)
+  }</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>takes an <code>Array</code> of <code>A</code> objects and a <em>predicate</em> from <code>A</code> to <code>Boolean</code></p></li><li class="fragment"><p>can find the first object of any type in an array that satisfies the provided predicate</p><div class="ulist"><ul><li><p>ex: find first prime</p></li></ul></div></li><li class="fragment"><p>composable</p></li></ul></div></section>
+<section id="_next_1"><h2>Next (1)</h2><div class="ulist"><ul><li><p>Coursera: Functional Programming in Scala Specialization</p><div class="ulist"><ul><li><p>Functional Programming Principles in Scala</p></li><li><p>Functional Program Design in Scala</p></li><li><p>Parallel programming</p></li><li><p>Big Data Analysis with Scala and Spark</p></li><li><p>Functional Programming in Scala Capstone</p></li></ul></div></li><li><p>Booklet: Daniel Westheide. “The Neophyte&#8217;s Guide to Scala”</p></li></ul></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><div class="title">Tip</div></td><td class="content"><strong>Solve the assignments</strong></td></tr></table></div></section>
+<section id="_next_2"><h2>Next (2)</h2><div class="ulist"><ul><li><p>Book: Bruce Eckel, and Dianne Marsh. “Atomic Scala 2nd Edition”</p></li><li><p>Book: Paul Chiusano, and Rúnar Bjarnason. “Functional Programming in Scala”</p></li><li><p>Book: Martin Odersky, Lex Spoon, and Bill Venners. “Programming in Scala, Third Edition”</p></li><li><p>Book: Josh Suereth Matthew Farwell. “sbt in Action”</p></li><li><p>Book: Christopher Allen, Julie Moronuki. “Haskell programming, from first principles”</p></li></ul></div></section>
+<section id="_next_3"><h2>Next (3)</h2><div class="ulist"><ul><li><p><a href="http://www.scalakoans.org" class="bare">http://www.scalakoans.org</a></p></li><li><p><a href="http://twitter.github.io/scala_school/" class="bare">http://twitter.github.io/scala_school/</a></p></li><li><p><a href="http://twitter.github.io/effectivescala/" class="bare">http://twitter.github.io/effectivescala/</a></p></li></ul></div></section>
+<section id="_next_4"><h2>Next (4)</h2><div class="ulist"><ul><li><p>Book: Jamie Allen. “Effective Akka.”</p></li><li><p>Book: Vaughn Vernon. “Reactive Messaging Patterns with the Actor Model: Applications and Integration in Scala and Akka”</p></li><li><p>Book: Raymond Roestenburg, Rob Bakker. “Akka in Action”</p></li></ul></div></section>
+<section id="_next_5"><h2>Next (5)</h2><div class="ulist"><ul><li><p>Book: Eric Evans. “Domain-Driven Design: Tackling Complexity in the Heart of Software”</p></li><li><p>Book: Jonas Bonér. “Reactive Microservices Architecture”</p></li><li><p>Book: Sam Newman. “Building Microservices”</p></li><li><p>Book: Holden Karau, Andy Konwinski, Patrick Wendell, and Matei Zaharia. “Learning Spark”</p></li></ul></div></section>
 <section id="_questions"><h2>Questions ..</h2></section>
 <section id="_thank_you"><h2>Thank You</h2></section>
 <section id="_game_over"><h2>Game Over</h2></section>

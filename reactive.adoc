@@ -1,8 +1,9 @@
 = functional and reactive programming for scalable architectures
 Khaled Hafez & Mohamed Ragab
 v3.11
-:encoding: utf-8
-:lang: en
+:icons: font
+// :encoding: utf-8
+// :lang: en
 ///////////////////////
   AsciiDoc use `source-highlight` as default highlighter.
 
@@ -15,22 +16,18 @@ v3.11
 ///////////////////////
 // :source-highlighter: coderay
 :source-highlighter: pygments
-
 // :pygments:
 :pygments-style: paraiso-dark
 // table or inline
 //:pygments-linenums-mode: inline
-
 // :source-highlighter: highlight
 // :highlightjsdir: highlight
 // :highlightjs-theme: github
 // :src_numbered: numbered
-
 :backend: revealjs
 :revealjs_theme: night
 // :revealjs_theme: simple
 // :revealjs_center: false
-
 // :backend: deckjs
 // :deckjs_theme: neon
 ///////////////////////
@@ -71,8 +68,16 @@ v3.11
 
 == Show of hands
 
-.Who is doing
 [%step]
+* who writes software regardless of the job title
+* who designs but doesn't write software
+
+== Show of hands
+
+.who is doing
+[%step]
+* Object Oriented Programming
+* Java
 * Functional Programming
 * Scala & Akka
 * Microservices
@@ -98,7 +103,7 @@ ____
 * Input
 * Processing
 * Output
-* No dependence on global state
+* No dependence on global state or external resources
 * No side effects
 
 == What is a side effect
@@ -132,13 +137,196 @@ ____
 * Drawing on the screen
 ____
 
-== Where to go from here
+
+== Scala jump start
+
+== Setup
+
+* Decent machine
+* Internet connection
+* IDE
+  ** Intellij IDEA + Scala Plugin which includes support for Sbt
+* Build
+  ** Sbt: Scala Build Tool, just download the latest version of sbt launcher
+
+== example: abs
+
+[source,scala,numbered]
+----
+def abs(n: Int): Int =
+  if (n < 0) -n
+  else n
+----
+
+[%step]
+* is this a pure function?
+* there is no `return` statement
+* there are no statements
+* everything is an expressions
+* `abs` function is a single expression, thus no need for `{ ... }`
+* and there are no `;`(s)
+
+== example: factorial
+
+[source,scala,numbered]
+----
+  def factorial(n: Int): Int = {
+    @annotation.tailrec
+    def go(n: Int, acc: Int): Int =
+      if (n <= 0) acc
+      else go(n-1, n*acc)
+
+    go(n, 1)
+  }
+----
+
+[%step]
+* a function inside a function
+* recursion
+* eliminating mutation not abstracting it
+* worried about stack, tail recursion
+* why `@annotation.tailrec`
+
+== example: result formatter
+
+[source,scala,numbered]
+----
+  def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
+  }
+----
+
+[%step]
+* what is `val`? - val vs var
+* what is the type of `msg`
+* what is the type of the return value of the function
+* type inference, everywhere except function parameters
+
+== example: object
+
+[source,scala,numbered]
+----
+object MyModule {
+  def abs(n: Int): Int =
+    if (n < 0) -n
+    else n
+
+  private def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
+  }
+
+  def main(args: Array[String]): Unit =
+    println(formatAbs(-42))
+}
+----
+
+[%step]
+* what is `object`
+* what is `private`
+* what is `main`
+* there is no `static`
+
+== example: composable result formatter
+
+[source,scala,numbered]
+----
+  def formatResult(name: String, n: Int, f: Int => Int) = {
+    val msg = "The %s of %d is %d."
+    msg.format(name, n, f(n))
+  }
+----
+
+* a function that takes a function as a parameter
+
+[source,scala,numbered]
+----
+  def main(args: Array[String]): Unit = {
+    println(formatResult("absolute value", -42, abs))
+    println(formatResult("factorial", 7, factorial))
+  }
+----
+
+== example: polymorphic function
+
+[source,scala,numbered]
+----
+  def findFirst(strArr: Array[String], key: String): Int = {
+    @annotation.tailrec
+    def findFrom(n: Int): Int =
+      if (n >= strArr.length) -1
+      else if (strArr(n) == key) n
+      else findFrom(n + 1)
+    findFrom(0)
+  }
+----
+
+[%step]
+* takes an `Array` of `String`(s) and a `String`
+* what about finding other types in arrays
+
+== example: polymorphic function (2)
+
+[source,scala,numbered]
+----
+  def findFirst[A](as: Array[A], p: A => Boolean): Int = {
+    @annotation.tailrec
+    def findFrom(n: Int): Int =
+      if (n >= as.length) -1
+      else if (p(as(n))) n
+      else findFrom(n + 1)
+    findFrom(0)
+  }
+----
+
+[%step]
+* takes an `Array` of `A` objects and a _predicate_ from `A` to `Boolean`
+* can find the first object of any type in an array that satisfies the provided predicate
+  ** ex: find first prime
+* composable
+
+
+
+
+== Next (1)
 
 * Coursera: Functional Programming in Scala Specialization
-* Book: Bruce Eckel. “Atomic Scala 2nd Edition.”
-* Book: Paul Chiusano Rúnar Bjarnason. “Functional Programming in Scala.”
-* Book: Martin Odersky. “Programming in Scala, Third Edition”
+  ** Functional Programming Principles in Scala
+  ** Functional Program Design in Scala
+  ** Parallel programming
+  ** Big Data Analysis with Scala and Spark
+  ** Functional Programming in Scala Capstone
+* Booklet: Daniel Westheide. “The Neophyte's Guide to Scala”
+
+TIP: **Solve the assignments**
+
+== Next (2)
+
+* Book: Bruce Eckel, and Dianne Marsh. “Atomic Scala 2nd Edition”
+* Book: Paul Chiusano, and Rúnar Bjarnason. “Functional Programming in Scala”
+* Book: Martin Odersky, Lex Spoon, and Bill Venners. “Programming in Scala, Third Edition”
+* Book: Josh Suereth Matthew Farwell. “sbt in Action”
+* Book: Christopher Allen, Julie Moronuki. “Haskell programming, from first principles”
+
+== Next (3)
+
+* http://www.scalakoans.org
+* http://twitter.github.io/scala_school/
+* http://twitter.github.io/effectivescala/
+
+== Next (4)
+
+* Book: Jamie Allen. “Effective Akka.”
 * Book: Vaughn Vernon. “Reactive Messaging Patterns with the Actor Model: Applications and Integration in Scala and Akka”
+* Book: Raymond Roestenburg, Rob Bakker. “Akka in Action”
+
+== Next (5)
+
+* Book: Eric Evans. “Domain-Driven Design: Tackling Complexity in the Heart of Software”
+* Book: Jonas Bonér. “Reactive Microservices Architecture”
+* Book: Sam Newman. “Building Microservices”
+* Book: Holden Karau, Andy Konwinski, Patrick Wendell, and Matei Zaharia. “Learning Spark”
 
 == Questions ..
 
