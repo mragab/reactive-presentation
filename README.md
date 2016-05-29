@@ -1,22 +1,22 @@
 # Setup
 
-brew install python
+    brew install python
 
-brew install ruby
+    brew install ruby
 
-echo "gem: --user-install -n~/bin" >> $HOME/.gemrc
+    echo "gem: --user-install -n~/bin" >> $HOME/.gemrc
 
-gem install asciidoctor tilt thread_safe haml guard slim pygments.rb
+    gem install http_parser livereload asciidoctor tilt thread_safe haml guard guard-shell guard-livereload slim pygments.rb
 
 # Run once
 
-asciidoctor -T asciidoctor-deck.js/templates/haml/ reactive.adoc
+    asciidoctor -T asciidoctor-deck.js/templates/haml/ reactive.adoc
 
-asciidoctor -T asciidoctor-reveal.js/templates/slim/ reactive.adoc
+    asciidoctor -T asciidoctor-reveal.js/templates/slim/ reactive.adoc
 
 # Run loop
 
-guard start
+    guard start
 
 # Edit source
 
