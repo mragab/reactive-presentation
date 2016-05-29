@@ -83,12 +83,33 @@ v3.11
 * Microservices
 * DevOps
 
+== History (1)
+
+* 1936: *Lambda Calculus* (Church & Rosser)
+* 1960: McCarthy defined the first versions of *LISP*
+* late 70's, Backus put forward the idea of a "pure", higher order programming language with syntax similar to combinatory logic
+* At about the same time, researchers at Univ. Edinburgh defined the language *ML* ("Meta-Language"). Besides being higher-order like FP (but richer in syntax), it hosts important features like type inference
+* 1986: Joe Armstrong, Robert Virding and Mike Williams developed "*Erlang*", a functional language with concurrent processes. Released as open source in 1998
+
+== History (2)
+
+* 1990: The first version of *Haskell* (1.0) was defined. Many features of *Haskell* originate in ML.
+* 1996: *OCaml* the main implementation of the Caml programming language, OCaml extends the core Caml language with object-oriented constructs.
+* 2001: The design of *Scala* started at EPFL
+* 2004: *Scala* was released publicly on the JVM
+* 2009: Version 1.0 of *clojure*
+
+== Why now?
+
+.The Free Lunch Is Over
+image::images/CPU.png[CPU, 500, 500]
+
 == What is Functional Programming
 
 [%step]
 * Programming with functions
 * Functions as the primary unit of abstraction
-* Kingdom of verbs as opposed to kingdom of nouns
+* Verbs as opposed to kingdom of nouns
 
 == What is it not
 
@@ -238,7 +259,7 @@ object MyModule {
   }
 ----
 
-* a function that takes a function as a parameter
+* _higher order function_: a function that takes a function as a parameter
 
 [source,scala,numbered]
 ----
@@ -286,8 +307,50 @@ object MyModule {
   ** ex: find first prime
 * composable
 
+== example: pattern matching
+
+[source,scala,numbered]
+----
+def sum(ints: List[Int]): Int = ints match {
+  case Nil => 0
+  case Cons(x,xs) => x + sum(xs)
+}
+----
+
+[%step]
+* `match { case .. => .. }`
+* `List` is composed of head and tail
+* `Cons` is short for __cons__truct and comes from Lisp
+* Scala has built in extractors for a number of types and you can write your own
 
 
+== example: Option
+
+[source,scala,numbered]
+----
+sealed trait Option[+A]
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
+----
+
+[source,scala,numbered]
+----
+def mean(xs: Seq[Double]): Option[Double] =
+  if (xs.isEmpty) None
+  else Some(xs.sum / xs.length)
+----
+
+* No `NullPointerException`
+
+== Summary
+
+* First class and higher order functions
+* Pure Functions and immutability
+* Recursion
+* Strict (eager) versus non-strict evaluation (lazy)
+* Type systems - lambda calculus
+* Referential transparency
+* Functional programming in non-functional languages
 
 == Next (1)
 
