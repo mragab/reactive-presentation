@@ -1,10 +1,12 @@
 # Setup
 
+brew install python
+
 brew install ruby
 
 echo "gem: --user-install -n~/bin" >> $HOME/.gemrc
 
-gem install asciidoctor tilt thread_safe haml guard slim
+gem install asciidoctor tilt thread_safe haml guard slim pygments.rb
 
 # Run once
 
@@ -24,11 +26,12 @@ edit reactive.adoc
 
 open reactive.html
 
-# Notes
+# Notes on syntax highlighting
 
 1. The best code highlighter is pygments
 2. Callouts look really bad, don't use them
 3. Don't try to use [%step] with code blocks, it trashes code highlighting
+4. To list the available styles `$(dirname $(gem which pygments.rb))/../vendor/pygments-main/pygmentize -L styles`
 
 # Switching backends
 
