@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Khaled Hafez &amp; Mohamed Ragab"><title>functional and reactive programming for scalable architectures</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h1>functional and reactive programming for scalable architectures</h1><p><small>Khaled Hafez &amp; Mohamed Ragab</small></p></section><section id="_today_s_plan"><h2>Today&#8217;s plan</h2><div class="olist arabic"><ol class="arabic"><li><p>Functional Programming</p></li><li><p>Reactive Programming</p></li><li><p>Actor Model</p></li><li><p>Messaging Patterns</p></li><li><p>Event Sourcing and CQRS</p></li><li><p>Domain Modeling</p></li><li><p>Microservices</p></li><li><p>DevOps and Continuous Delivery</p></li></ol></div></section>
+<section id="_show_of_hands"><h2>Show of hands</h2><div class="ulist"><div class="title">Who is familiar with</div><ul><li class="fragment"><p>Functional Programming</p></li><li class="fragment"><p>Reactive Programming</p></li><li class="fragment"><p>Actor Model</p></li><li class="fragment"><p>Event Sourcing</p></li><li class="fragment"><p>CQRS</p></li><li class="fragment"><p>Microservices</p></li><li class="fragment"><p>DevOps</p></li></ul></div></section>
+<section id="_show_of_hands_2"><h2>Show of hands</h2><div class="ulist"><div class="title">Who is doing</div><ul><li class="fragment"><p>Functional Programming</p></li><li class="fragment"><p>Scala &amp; Akka</p></li><li class="fragment"><p>Microservices</p></li><li class="fragment"><p>DevOps</p></li></ul></div></section>
+<section id="_what_is_functional_programming"><h2>What is Functional Programming</h2><div class="ulist"><ul><li class="fragment"><p>Programming with functions</p></li><li class="fragment"><p>Functions as the primary unit of abstraction</p></li><li class="fragment"><p>Kingdom of verbs as opposed to kingdom of nouns</p></li></ul></div></section>
+<section id="_what_is_it_not"><h2>What is it not</h2><div class="quoteblock"><blockquote><div class="paragraph"><p><strong>It is not a new programming language syntax</strong></p></div></blockquote><div class="attribution">&#8212; You only feel this for real as you learn it</div></div></section>
+<section id="_what_is_a_pure_function"><h2>What is a pure function</h2><div class="ulist"><ul><li class="fragment"><p>Input</p></li><li class="fragment"><p>Processing</p></li><li class="fragment"><p>Output</p></li><li class="fragment"><p>No dependence on global state</p></li><li class="fragment"><p>No side effects</p></li></ul></div></section>
+<section id="_what_is_a_side_effect"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A function has a side effect if it does something other than simply return a result</p></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
+<section id="_what_is_a_side_effect_2"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="ulist"><div class="title">for example:</div><ul><li><p>Modifying a variable</p></li><li><p>Modifying a data structure in place</p></li><li><p>Setting a field on an object</p></li><li><p>Throwing an exception</p></li><li><p>Halting with an error</p></li></ul></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
+<section id="_what_is_a_side_effect_3"><h2>What is a side effect</h2><div class="quoteblock"><blockquote><div class="ulist"><div class="title">for example:</div><ul><li><p>Printing to the console</p></li><li><p>Reading user input</p></li><li><p>Reading from or writing to a file</p></li><li><p>Drawing on the screen</p></li></ul></div></blockquote><div class="attribution">&#8212; Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala</div></div></section>
+<section id="_where_to_go_from_here"><h2>Where to go from here</h2><div class="ulist"><ul><li><p>Coursera: Functional Programming in Scala Specialization</p></li><li><p>Book: Bruce Eckel. “Atomic Scala 2nd Edition.”</p></li><li><p>Book: Paul Chiusano Rúnar Bjarnason. “Functional Programming in Scala.”</p></li><li><p>Book: Martin Odersky. “Programming in Scala, Third Edition”</p></li><li><p>Book: Vaughn Vernon. “Reactive Messaging Patterns with the Actor Model: Applications and Integration in Scala and Akka”</p></li></ul></div></section>
+<section id="_questions"><h2>Questions ..</h2></section>
+<section id="_thank_you"><h2>Thank You</h2></section>
+<section id="_game_over"><h2>Game Over</h2></section>
+<section id="_samples"><h2>Samples</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="scala language-scala">println(s"$name: hello world\n")
+println(s"$name: hello world\n")</code></pre></div></div></section>
+<section id="_slide_one"><h2>Slide One</h2><div class="ulist"><ul><li class="fragment"><p>Foo</p></li><li class="fragment"><p>Bar</p></li><li class="fragment"><p>World</p></li></ul></div></section>
+<section id="_slide_one_2"><h2>Slide One</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="ruby language-ruby">ORDERED_LIST_KEYWORDS = {
+  'loweralpha' =&gt; 'b',
+  'lowerroman' =&gt; 'i',
+  'upperalpha' =&gt; 'A',
+  'upperroman' =&gt; 'I'
+   #'lowergreek' =&gt; 'a'
+   #'arabic'     =&gt; '1'
+   #'decimal'    =&gt; '1'
+}</code></pre></div></div></section>
+<section><section id="_slide_1_1"><h2>Slide 1.1</h2><div class="paragraph"><p>Does this work here?</p></div></section><section id="_slide_1_2"><h2>Slide 1.2</h2><div class="paragraph"><p>Does this work here?</p></div></section><section id="_slide_1_3"><h2>Slide 1.3</h2><div class="paragraph"><p>Does this work here?</p></div></section></section>
+<section id="_slide_two"><h2>Slide Two</h2><div class="paragraph"><p>Hello World - Good Bye Cruel World</p></div>
+<div class="paragraph"><p>A might not be that cruel world after all</p></div></section>
+<section id="_slide_three"><h2>Slide Three</h2><div class="paragraph"><p>How about a third slide</p></div>
+<div class="ulist"><ul><li class="fragment"><p>With</p></li><li class="fragment"><p>A few</p></li><li class="fragment"><p>Bullets</p></li><li class="fragment"><p>In steps</p></li></ul></div>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: false,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>

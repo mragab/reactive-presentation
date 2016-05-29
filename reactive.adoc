@@ -16,23 +16,23 @@ v3.11
 // :source-highlighter: coderay
 :source-highlighter: pygments
 
+// :pygments:
+:pygments-style: paraiso-dark
+// table or inline
+//:pygments-linenums-mode: inline
 
 // :source-highlighter: highlight
 // :highlightjsdir: highlight
-//:highlightjs-theme: github
-//:pygments:
-//:pygments-style: manni
-// table or inline
-//:pygments-linenums-mode: inline
-//:src_numbered: numbered
+// :highlightjs-theme: github
+// :src_numbered: numbered
 
 :backend: revealjs
 :revealjs_theme: night
-//:revealjs_theme: simple
-//:revealjs_center: false
+// :revealjs_theme: simple
+// :revealjs_center: false
 
 // :backend: deckjs
-//:deckjs_theme: neon
+// :deckjs_theme: neon
 ///////////////////////
   Transitions that you can choose includes:
   fade, horizontal-slide, vertical-slide
@@ -43,12 +43,110 @@ v3.11
 // :menu:
 // :navigation:
 // :status:
-//:toc:
-//:split:
+// :toc:
+// :split:
 
-== Bugs
+== Today's plan
 
-Where do they come from
+. Functional Programming
+. Reactive Programming
+. Actor Model
+. Messaging Patterns
+. Event Sourcing and CQRS
+. Domain Modeling
+. Microservices
+. DevOps and Continuous Delivery
+
+== Show of hands
+
+.Who is familiar with
+[%step]
+* Functional Programming
+* Reactive Programming
+* Actor Model
+* Event Sourcing
+* CQRS
+* Microservices
+* DevOps
+
+== Show of hands
+
+.Who is doing
+[%step]
+* Functional Programming
+* Scala & Akka
+* Microservices
+* DevOps
+
+== What is Functional Programming
+
+[%step]
+* Programming with functions
+* Functions as the primary unit of abstraction
+* Kingdom of verbs as opposed to kingdom of nouns
+
+== What is it not
+
+[quote, You only feel this for real as you learn it]
+____
+**It is not a new programming language syntax**
+____
+
+== What is a pure function
+
+[%step]
+* Input
+* Processing
+* Output
+* No dependence on global state
+* No side effects
+
+== What is a side effect
+
+[quote, Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala]
+____
+A function has a side effect if it does something other than simply return a result
+____
+
+== What is a side effect
+
+[quote, Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala]
+____
+.for example:
+* Modifying a variable
+* Modifying a data structure in place
+* Setting a field on an object
+* Throwing an exception
+* Halting with an error
+____
+
+
+== What is a side effect
+
+[quote, Paul Chiusano Rúnar Bjarnason - Functional Programming in Scala]
+____
+.for example:
+* Printing to the console
+* Reading user input
+* Reading from or writing to a file
+* Drawing on the screen
+____
+
+== Where to go from here
+
+* Coursera: Functional Programming in Scala Specialization
+* Book: Bruce Eckel. “Atomic Scala 2nd Edition.”
+* Book: Paul Chiusano Rúnar Bjarnason. “Functional Programming in Scala.”
+* Book: Martin Odersky. “Programming in Scala, Third Edition”
+* Book: Vaughn Vernon. “Reactive Messaging Patterns with the Actor Model: Applications and Integration in Scala and Akka”
+
+== Questions ..
+
+== Thank You
+
+== Game Over
+
+== Samples
 
 [source,scala,numbered]
 ----
